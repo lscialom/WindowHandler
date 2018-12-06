@@ -15,4 +15,6 @@ WINDOW_HANDLER_EXPORTS void Shutdown();
 
 WINDOW_HANDLER_EXPORTS void GetFramebufferSize(int *width, int *height);
 WINDOW_HANDLER_EXPORTS void SetFramebufferSizeCallbackSignal(bool *callback);
+
+WINDOW_HANDLER_EXPORTS void* GetWindowHandle();
 } // namespace WindowHandler

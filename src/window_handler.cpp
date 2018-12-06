@@ -30,6 +30,8 @@ void SetFramebufferSizeCallbackSignal(bool *callback) {
   framebufferResizeCallbackSignal = callback;
 }
 
+void *GetWindowHandle() { return window; }
+
 bool Update() {
   glfwPollEvents();
 
