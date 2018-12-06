@@ -36,3 +36,4 @@ add_library(window_handler SHARED ${PROJECT_SOURCE_DIR}/src/window_handler.cpp)
 target_include_directories(window_handler PRIVATE ${PROJECT_SOURCE_DIR}/include
                                                   ${PROJECT_SOURCE_DIR}/deps/glfw/include)
 target_link_libraries(window_handler PRIVATE "glfw")
+set_target_properties(window_handler PROPERTIES COMPILE_FLAGS "${COMPILE_FLAGS} -DWINDOW_HANDLER_DLL_EXPORTS")
