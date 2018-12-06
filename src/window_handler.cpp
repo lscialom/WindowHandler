@@ -1,7 +1,11 @@
 #include "window_handler.hpp"
 
+#ifdef _WIN32
+#define GLFW_EXPOSE_NATIVE_WIN32
+#endif
+
 #include <GLFW/glfw3.h>
-#include <windows.h>
+#include <GLFW/glfw3native.h>
 
 namespace WindowHandler {
 static GLFWwindow *window;
@@ -31,7 +35,10 @@ void SetFramebufferSizeCallbackSignal(bool *callback) {
   framebufferResizeCallbackSignal = callback;
 }
 
-Handle GetHandle() { return {GetModuleHandle(nullptr), window}; }
+void* GetHandle()
+{
+	return glfwGetWin32Window(window);
+}
 
 bool Update() {
   glfwPollEvents();
