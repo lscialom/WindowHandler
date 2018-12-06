@@ -1,6 +1,7 @@
 #include "window_handler.hpp"
 
 #include <GLFW/glfw3.h>
+#include <windows.h>
 
 namespace WindowHandler {
 static GLFWwindow *window;
@@ -30,7 +31,7 @@ void SetFramebufferSizeCallbackSignal(bool *callback) {
   framebufferResizeCallbackSignal = callback;
 }
 
-void *GetWindowHandle() { return window; }
+Handle GetHandle() { return {GetModuleHandle(nullptr), window}; }
 
 bool Update() {
   glfwPollEvents();
