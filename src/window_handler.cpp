@@ -18,6 +18,12 @@ static void framebufferResizeCallback(GLFWwindow *, int, int) {
   *framebufferResizeCallbackSignal = true;
 }
 
+static void *getWindowHandle();
+
+#ifdef _WIN32
+void *getWindowHandle() { return glfwGetWin32Window(window); }
+#endif
+
 void Init(uint32_t width, uint32_t height) {
   glfwInit();
 
@@ -35,10 +41,7 @@ void SetFramebufferSizeCallbackSignal(bool *callback) {
   framebufferResizeCallbackSignal = callback;
 }
 
-void* GetHandle()
-{
-	return glfwGetWin32Window(window);
-}
+void *GetHandle() { return getWindowHandle(); }
 
 bool Update() {
   glfwPollEvents();
