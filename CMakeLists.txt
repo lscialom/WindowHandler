@@ -20,10 +20,10 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELWITHDEBINFO "${OUTPUT_DIRECTORY}/archive")
 
 # Compile flags
 if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Xclang -std=c++17 -Xclang -fcxx-exceptions /fp:fast /arch:AVX -flto -fwhole-program-vtables -Xclang -O0")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Xclang -std=c++17 -Xclang -fcxx-exceptions /fp:fast /arch:AVX -Xclang -O0")
 	add_definitions(-DDEBUG)
 else()
- 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Xclang -std=c++17 -Xclang -fcxx-exceptions /fp:fast /arch:AVX -flto -fwhole-program-vtables -Xclang -O3")
+ 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Xclang -std=c++17 -Xclang -fcxx-exceptions /fp:fast /arch:AVX -Xclang -O3")
 	add_definitions(-DNDEBUG)
 endif()
 
