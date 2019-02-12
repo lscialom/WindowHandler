@@ -7,8 +7,12 @@
 #include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
 
+#include <functional>
+#include <vector>
+
 namespace WindowHandler {
 static GLFWwindow *window;
+static std::vector<KeyCallbackPFN> keyCallbacks;
 
 static bool *framebufferResizeCallbackSignal = nullptr;
 static void framebufferResizeCallback(GLFWwindow *, int, int) {
@@ -16,6 +20,12 @@ static void framebufferResizeCallback(GLFWwindow *, int, int) {
     return;
 
   *framebufferResizeCallbackSignal = true;
+}
+
+static void KeyCallback(GLFWwindow *w, int key, int scancode, int action,
+                        int mods) {
+  for (size_t i = 0; i < keyCallbacks.size(); ++i)
+    keyCallbacks[i](key, scancode, action, mods);
 }
 
 static void *getWindowHandle();
@@ -31,6 +41,8 @@ void Init(uint32_t width, uint32_t height) {
 
   window = glfwCreateWindow(width, height, "Vulkan", nullptr, nullptr);
   glfwSetFramebufferSizeCallback(window, framebufferResizeCallback);
+
+  glfwSetKeyCallback(window, KeyCallback);
 }
 
 void GetFramebufferSize(int *width, int *height) {
@@ -42,6 +54,19 @@ void SetFramebufferSizeCallbackSignal(bool *callback) {
 }
 
 void *GetHandle() { return getWindowHandle(); }
+
+void AddKeyCallback(KeyCallbackPFN callback) {
+  keyCallbacks.push_back(callback);
+}
+
+void RemoveKeyCallback(KeyCallbackPFN callback) {
+  for (size_t i = 0; i < keyCallbacks.size(); ++i) {
+    if (keyCallbacks[i] == callback) {
+      keyCallbacks.erase(keyCallbacks.begin() + i);
+      return;
+    }
+  }
+}
 
 bool Update() {
   glfwPollEvents();
